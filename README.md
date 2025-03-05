@@ -7,3 +7,7 @@ This project is currently in development and is written in Free Pascal (Lazarus)
 ![Screenshot 1](screenshot-1.png)
 
 ![Screenshot 1](screenshot-2.png)
+
+Todo:
+Headers, server response headers
+
