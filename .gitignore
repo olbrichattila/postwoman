@@ -1,2 +1,22 @@
 *.se
 *.cl
+
+# Compiled executables and libraries
+*.exe
+*.dll
+*.so
+*.dylib
+*.bundle
+
+# Debug and release output directories
+bin/
+lib/
+backup/
+
+# Lazarus backup files
+*.*~
+*.bak
+
+# Temporary files
+*.tmp
+*.temp
