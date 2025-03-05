@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <General>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="postwoman"/>
+      <Scaled Value="True"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
+      <Icon Value="0"/>
+    </General>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="weblaz"/>
+      </Item>
+      <Item>
+        <PackageName Value="LCL"/>
+      </Item>
+    </RequiredPackages>
+    <Units>
+      <Unit>
+        <Filename Value="postwoman.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit>
+      <Unit>
+        <Filename Value="client.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="environmentunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="environmentUnit"/>
+      </Unit>
+      <Unit>
+        <Filename Value="serverenvironmentunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="serverEnvironmentUnit"/>
+      </Unit>
+      <Unit>
+        <Filename Value="serversocket.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="serverSocket"/>
+      </Unit>
+      <Unit>
+        <Filename Value="httpsocket.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="httpSocket"/>
+      </Unit>
+      <Unit>
+        <Filename Value="requesttabsheetunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RequestTabSheet"/>
+      </Unit>
+      <Unit>
+        <Filename Value="postwomantabsheet.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="PostWomanTabSheet"/>
+      </Unit>
+      <Unit>
+        <Filename Value="servertabsheet.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ServerTabSheet"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Target>
+      <Filename Value="postwoman"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
