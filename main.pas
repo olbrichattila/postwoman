@@ -6,17 +6,24 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, ComCtrls, Menus, environmentUnit, serverEnvironmentUnit,
+  ExtCtrls, ComCtrls, Menus, ValEdit, environmentUnit, serverEnvironmentUnit,
   Types, RequestTabSheet, ServerTabSheet;
 
 type
   { TMainForm }
 
   TMainForm = class(TForm)
+    AggegatedServerResultPageControl: TTabSheet;
+    AggregatedRequestResultSheet: TTabSheet;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
     LoadTabsButton: TButton;
     AddRequestButton: TButton;
     AddServerButton: TButton;
+    ServerResultMemo: TMemo;
+    RequestResultPageControl: TPageControl;
     ResultMemo: TMemo;
+    ResultPanel: TPanel;
     DeleteMenuOption: TMenuItem;
     DeleteServerMenuItem: TMenuItem;
     RenameServerInfoMenu: TMenuItem;
@@ -25,7 +32,10 @@ type
     Save: TMenuItem;
     PageControl1: TPageControl;
     ClientPageControl: TPageControl;
+    ServerResultPageControl: TPageControl;
     ServerTabMenu: TPopupMenu;
+    Splitter1: TSplitter;
+    Splitter2: TSplitter;
     TabMenu: TPopupMenu;
     ServerPageControl: TPageControl;
     Panel1: TPanel;
@@ -58,7 +68,8 @@ type
     procedure ResetServerTab;
     procedure AddRequestTab(const AClientInfo: TClientInfo);
     procedure AddServerTab(const AServerInfo: TServerInfo);
-    procedure MemoAdd(Sender: TObject; const Message: String);
+    procedure RequestMemoAdd(Sender: TObject; const Message: String);
+    procedure ServerMemoAdd(Sender: TObject; const Message: String);
   public
   end;
 
@@ -181,25 +192,42 @@ end;
 
 procedure TMainForm.RenameClick(Sender: TObject);
 var
-  NewTabName: String;
+  OldTabName, NewTabName: String;
+  i: Integer;
 begin
   if TabMenu.PopupComponent is TTabSheet then
     begin
-      NewTabName := InputBox('Rename Tab', 'Enter new tab name:', TTabSheet(TabMenu.PopupComponent).Caption);
+      OldTabName := TTabSheet(TabMenu.PopupComponent).Caption;
+      NewTabName := InputBox('Rename Tab', 'Enter new tab name:', OldTabName);
+
       FEnv.Rename(TTabSheet(TabMenu.PopupComponent).Caption, NewTabName);
       TTabSheet(TabMenu.PopupComponent).Caption:= NewTabName;
+
+      for i := 0 to RequestResultPageControl.PageCount -1 do
+      begin
+        if RequestResultPageControl.Page[i].Caption = OldTabName then
+                RequestResultPageControl.Page[i].Caption := NewTabName;
+      end;
     end;
 end;
 
 procedure TMainForm.RenameServerInfoMenuClick(Sender: TObject);
 var
-  NewTabName: String;
+  OldTabName, NewTabName: String;
+  i: Integer;
 begin
     if ServerTabMenu.PopupComponent is TTabSheet then
     begin
-      NewTabName := InputBox('Rename Tab', 'Enter new tab name:', TTabSheet(ServerTabMenu.PopupComponent).Caption);
+      OldTabName := TTabSheet(ServerTabMenu.PopupComponent).Caption;
+      NewTabName := InputBox('Rename Tab', 'Enter new tab name:', OldTabName);
       FServerEnv.Rename(TTabSheet(ServerTabMenu.PopupComponent).Caption, NewTabName);
       TTabSheet(ServerTabMenu.PopupComponent).Caption:= NewTabName;
+
+      for i := 0 to ServerResultPageControl.PageCount -1 do
+      begin
+        if ServerResultPageControl.Page[i].Caption = OldTabName then
+                ServerResultPageControl.Page[i].Caption := NewTabName;
+      end;
     end;
 end;
 
@@ -208,7 +236,7 @@ begin
   with TRequestTabSheet(TabMenu.PopupComponent) do
    begin
        FEnv.Add(Caption, GetClientInfo);
-       OnResponse:=@MemoAdd;
+       OnResponse:=@RequestMemoAdd;
    end;
 end;
 
@@ -245,28 +273,68 @@ begin
 end;
 
 procedure TMainForm.AddRequestTab(const AClientInfo: TClientInfo);
+var
+  ResultTabSheet: TTabSheet;
+  RequestResultMemo: TMemo;
 begin
   with TRequestTabSheet.Create(ClientPageControl, AClientInfo) do
    begin
      PageControl := ClientPageControl;
      PopupMenu := TabMenu;
-     OnResponse := @MemoAdd;
+
+     ResultTabSheet := RequestResultPageControl.AddTabSheet;
+     ResultTabSheet.Caption:=AClientInfo.Name;
+     RequestResultMemo := TMemo.Create(ResultTabSheet);
+     RequestResultMemo.Parent := ResultTabSheet;
+     RequestResultMemo.Align:= alClient;
+     Memo := RequestResultMemo;
+
+     OnResponse := @RequestMemoAdd;
    end;
 end;
 
 procedure TMainForm.AddServerTab(const AServerInfo: TServerInfo);
+var
+  ResultTabSheet: TTabSheet;
+  RequestResultMemo: TMemo;
 begin
    with TServerTabSheet.Create(ServerPageControl, AServerInfo) do
     begin
-         PageControl:= ServerPageControl;
-         PopupMenu := ServerTabMenu;
-         OnResponse := @MemoAdd;
+     PageControl:= ServerPageControl;
+     PopupMenu := ServerTabMenu;
+
+     ResultTabSheet := ServerResultPageControl.AddTabSheet;
+     ResultTabSheet.Caption:=AServerInfo.Name;
+     RequestResultMemo := TMemo.Create(ResultTabSheet);
+     RequestResultMemo.Parent := ResultTabSheet;
+     RequestResultMemo.Align:= alClient;
+     Memo := RequestResultMemo;
+     OnResponse := @ServerMemoAdd;
     end;
 end;
 
-procedure TMainForm.MemoAdd(Sender: TObject; const Message: String);
+procedure TMainForm.RequestMemoAdd(Sender: TObject; const Message: String);
 begin
   ResultMemo.Lines.Add(Message);
+  ResultMemo.Lines.Add('---------------------');
+
+  if (Sender is TRequestTabSheet) and Assigned(TRequestTabSheet(Sender).Memo) then
+  begin
+   TRequestTabSheet(Sender).Memo.Lines.Add(Message);
+   TRequestTabSheet(Sender).Memo.Lines.Add('---------------------');
+  end;
+end;
+
+procedure TMainForm.ServerMemoAdd(Sender: TObject; const Message: String);
+begin
+  ServerResultMemo.Lines.Add(Message);
+  ServerResultMemo.Lines.Add('---------------------');
+
+  if (Sender is TServerTabSheet) and Assigned(TServerTabSheet(Sender).Memo) then
+  begin
+   TServerTabSheet(Sender).Memo.Lines.Add(Message);
+   TServerTabSheet(Sender).Memo.Lines.Add('---------------------');
+  end;
 end;
 
 end.

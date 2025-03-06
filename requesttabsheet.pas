@@ -16,16 +16,18 @@ type
       FOnresponse: TOnResponse;
       FCLientInfo: TClientInfo;
       FCLient: TClient;
+      FMemo: TMemo;
       procedure Build;
       procedure ClientSendBtnClick(Sender: TObject);
       procedure SetOnResponse(AOnresponse: TOnResponse);
+      procedure InternalResponse(Sender: TObject; const Message: String);
     protected
     public
       constructor Create(TheOwner: TComponent; const AClientInfo: TClientInfo);
       destructor Destroy; override;
       function GetClientInfo: TClientInfo;
       property OnResponse: TOnResponse read FOnresponse write SetOnResponse;
-
+      property Memo: TMemo read FMemo write FMemo;
   end;
 
 implementation
@@ -113,9 +115,13 @@ end;
 
 procedure TRequestTabSheet.SetOnResponse(AOnresponse: TOnResponse);
 begin
-  WriteLn('Set on response');
-  FCLient.OnResponse:=AOnresponse;
   FOnresponse:=AOnresponse;
+end;
+
+procedure TRequestTabSheet.InternalResponse(Sender: TObject;
+  const Message: String);
+begin
+  if Assigned(FOnresponse) then FOnresponse(Self, Message);
 end;
 
 constructor TRequestTabSheet.Create(TheOwner: TComponent; const AClientInfo: TClientInfo);
@@ -123,7 +129,7 @@ begin
    inherited Create(TheOwner);
    FCLientInfo:= AClientInfo;
    FCLient := TClient.Create;
-   FCLient.OnResponse:=FOnresponse;
+   FCLient.OnResponse:=@InternalResponse;
    Caption := AClientInfo.Name;
    Build;
 end;

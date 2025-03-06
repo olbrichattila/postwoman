@@ -1,7 +1,7 @@
 object MainForm: TMainForm
   Left = 2379
   Height = 600
-  Top = 278
+  Top = 204
   Width = 800
   Caption = 'PostWoman'
   ClientHeight = 600
@@ -9,32 +9,22 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '3.6.0.0'
-  object ResultMemo: TMemo
-    Left = 0
-    Height = 184
-    Top = 416
-    Width = 800
-    Align = alBottom
-    ScrollBars = ssAutoVertical
-    TabOrder = 0
-    OnChange = ResultMemoChange
-  end
   object Panel1: TPanel
     Left = 0
-    Height = 416
+    Height = 310
     Top = 0
     Width = 800
     Align = alClient
-    ClientHeight = 416
+    ClientHeight = 310
     ClientWidth = 800
-    TabOrder = 1
+    TabOrder = 0
     object Panel2: TPanel
       Left = 1
-      Height = 414
+      Height = 308
       Top = 1
       Width = 170
       Align = alLeft
-      ClientHeight = 414
+      ClientHeight = 308
       ClientWidth = 170
       TabOrder = 0
       object AddRequestButton: TButton
@@ -67,7 +57,7 @@ object MainForm: TMainForm
     end
     object PageControl1: TPageControl
       Left = 171
-      Height = 414
+      Height = 308
       Top = 1
       Width = 628
       ActivePage = ClientSheet
@@ -76,11 +66,11 @@ object MainForm: TMainForm
       TabOrder = 1
       object ClientSheet: TTabSheet
         Caption = 'Clients'
-        ClientHeight = 382
+        ClientHeight = 276
         ClientWidth = 618
         object ClientPageControl: TPageControl
           Left = 0
-          Height = 382
+          Height = 276
           Top = 0
           Width = 618
           Align = alClient
@@ -93,11 +83,11 @@ object MainForm: TMainForm
       end
       object ServerSheet: TTabSheet
         Caption = 'Servers'
-        ClientHeight = 382
+        ClientHeight = 276
         ClientWidth = 618
         object ServerPageControl: TPageControl
           Left = 0
-          Height = 382
+          Height = 276
           Top = 0
           Width = 618
           Align = alClient
@@ -108,6 +98,103 @@ object MainForm: TMainForm
           Options = [nboShowCloseButtons]
         end
       end
+    end
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 10
+    Top = 310
+    Width = 800
+    Align = alBottom
+    ResizeAnchor = akBottom
+  end
+  object ResultPanel: TPanel
+    Left = 0
+    Height = 280
+    Top = 320
+    Width = 800
+    Align = alBottom
+    ClientHeight = 280
+    ClientWidth = 800
+    TabOrder = 2
+    object GroupBox1: TGroupBox
+      Left = 1
+      Height = 278
+      Top = 1
+      Width = 430
+      Align = alClient
+      Caption = 'Request responses'
+      ClientHeight = 259
+      ClientWidth = 428
+      TabOrder = 0
+      object RequestResultPageControl: TPageControl
+        Left = 0
+        Height = 259
+        Top = 0
+        Width = 428
+        ActivePage = AggregatedRequestResultSheet
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object AggregatedRequestResultSheet: TTabSheet
+          Caption = 'Aggregated'
+          ClientHeight = 227
+          ClientWidth = 418
+          object ResultMemo: TMemo
+            Left = 0
+            Height = 227
+            Top = 0
+            Width = 418
+            Align = alClient
+            ScrollBars = ssAutoVertical
+            TabOrder = 0
+            OnChange = ResultMemoChange
+          end
+        end
+      end
+    end
+    object GroupBox2: TGroupBox
+      Left = 440
+      Height = 278
+      Top = 1
+      Width = 359
+      Align = alRight
+      Caption = 'ServerResponses'
+      ClientHeight = 259
+      ClientWidth = 357
+      TabOrder = 1
+      object ServerResultPageControl: TPageControl
+        Left = 0
+        Height = 259
+        Top = 0
+        Width = 357
+        ActivePage = AggegatedServerResultPageControl
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object AggegatedServerResultPageControl: TTabSheet
+          Caption = 'Aggregated'
+          ClientHeight = 227
+          ClientWidth = 347
+          object ServerResultMemo: TMemo
+            Left = 0
+            Height = 227
+            Top = 0
+            Width = 347
+            Align = alClient
+            TabOrder = 0
+          end
+        end
+      end
+    end
+    object Splitter2: TSplitter
+      Left = 431
+      Height = 278
+      Top = 1
+      Width = 9
+      Align = alRight
+      ResizeAnchor = akRight
     end
   end
   object TabMenu: TPopupMenu

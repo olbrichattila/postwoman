@@ -16,6 +16,7 @@ type
 
   TServerTabSheet = class(TPostWonamTabSheet)
     private
+      FMemo: TMemo;
       FOnresponse: TOnResponse;
       FServerInfo: TServerInfo;
       FHttpSocket: THttpSocket;
@@ -28,6 +29,7 @@ type
       destructor Destroy; override;
       public function GetServerInfo: TServerInfo;
       property OnResponse: TOnResponse read FOnresponse write FOnresponse;
+      property Memo: TMemo read FMemo write FMemo;
   end;
 
 

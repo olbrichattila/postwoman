@@ -65,7 +65,7 @@ begin
   try
     HTTPCilent.RequestBody := Stream;
     HTTPCilent.HTTPMethod(FMethod, FURL, ResponseStream, []);
-    FResult:= 'Server response:' +#13+#10+ResponseStream.DataString;
+    FResult:= ResponseStream.DataString;
     Synchronize(@OnResult);
   finally
     Stream.Free;
