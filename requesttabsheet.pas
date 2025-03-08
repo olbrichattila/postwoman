@@ -5,8 +5,9 @@ unit RequestTabSheet;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, ComCtrls, Menus, environmentUnit, PostWomanTabSheet, client;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls,
+  ExtCtrls, ComCtrls, Menus, environmentUnit, PostWomanTabSheet, client,
+  keyValueEditor;
 
 type TOnResponse = procedure(Sender: TObject; const Message: String) of Object;
 type
@@ -36,11 +37,13 @@ implementation
 
 procedure TRequestTabSheet.Build;
 var
-  TabSheet: TTabSheet;
+  TabSheet, ChildTabSheet: TTabSheet;
   Panel: TPanel;
+  ChildPageControl: TPageControl;
   Index: Integer;
 begin
   TabSheet := Self;
+  // Main panel
   Panel := TPanel.Create(TabSheet);
   with Panel do
   begin
@@ -89,12 +92,33 @@ begin
        OnClick := @ClientSendBtnClick;
     end;
   end;
-  with TMemo.Create(TabSheet) do
+
+  // Editors
+  ChildPageControl:= TPageControl.Create(TabSheet);
+  with ChildPageControl do
   begin
-     Parent := TabSheet;
-     Tag := Ord(TComponentId.Body);
-     Lines.Text := FClientInfo.Body;
-     Align:= alClient;
+    Align:= alClient;
+    Parent := TabSheet;
+
+    // Raw Request
+    ChildTabSheet := AddTabSheet;
+    ChildTabSheet.Caption := 'Raw request';
+    with TMemo.Create(ChildTabSheet) do
+    begin
+       Parent := ChildTabSheet;
+       Tag := Ord(TComponentId.Body);
+       Lines.Text := FClientInfo.Body;
+       Align:= alClient;
+    end;
+
+    // Header
+    ChildTabSheet := AddTabSheet;
+    ChildTabSheet.Caption := 'Headers';
+    with TKeyValueEditor.Create(ChildTabSheet) do
+    begin
+      Tag := Ord(TComponentId.HeaderEditor);
+    end;
+
   end;
 end;
 
@@ -104,7 +128,9 @@ var
 begin
   if not Assigned(FOnresponse) then exit;
    FCLient.URL := GetUrl;
+   FClient.Headers := GetHeaders;
    RequestType := GetMethod;
+
    case RequestType of
         'GET', 'HEAD', 'OPTIONS', 'TRACE', 'CONNECT': FClient.Body := ''
          else FClient.Body := GetBody;

@@ -82,6 +82,16 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="ServerTabSheet"/>
       </Unit>
+      <Unit>
+        <Filename Value="keyvalueeditor.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="keyValueEditor"/>
+      </Unit>
+      <Unit>
+        <Filename Value="customhelpers.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CustomHelpers"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

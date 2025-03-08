@@ -5,7 +5,7 @@ unit client;
 interface
 
 uses
-  Classes, SysUtils, fphttpclient;
+  Classes, SysUtils, fphttpclient, CustomHelpers;
 
 type
     { TTheadedClient }
@@ -13,14 +13,14 @@ type
     TTheadedClient = class(TThread)
     private
         FOnResponse: TOnResponse;
-        FResult, FUrl, FBody, FMethod: String;
+        FResult, FUrl, FBody, FMethod, FHeaders: String;
         procedure OnResult;
         procedure SetOnResponse(AOnResponse: TOnResponse);
     protected
         procedure Execute; override;
     public
-        constructor Create(Url, Method: String; AOnResponse: TOnResponse);
-        constructor Create(Url, Method, Body: String; AOnResponse: TOnResponse);
+        constructor Create(Url, Method, Headers: String; AOnResponse: TOnResponse);
+        constructor Create(Url, Method, Headers, Body: String; AOnResponse: TOnResponse);
         property OnResponse: TOnResponse read FOnResponse write SetOnResponse;
     end;
 
@@ -30,6 +30,7 @@ type
       FOnResponse: TOnResponse;
       FURL: String;
       FBody: String;
+      FHeaders: String;
       procedure SetOnResponse(AOnResponse: TOnResponse);
       public
       // Standard HTTP request types
@@ -37,6 +38,7 @@ type
 
         property URL: String read FURL write FURL;
         property Body: String read FBody write FBody;
+        property Headers: String read FHeaders write FHeaders;
         property OnResponse: TOnResponse read FOnResponse write SetOnResponse;
     end;
 
@@ -57,12 +59,24 @@ end;
 procedure TTheadedClient.Execute;
 var
   Stream, ResponseStream:  TStringStream;
+  HeaderList: TStringList;
   HTTPCilent: TFPHTTPClient;
+  Splitted: TSplitted;
+  i: Integer;
 begin
   Stream := TStringStream.Create(FBody);
   ResponseStream := TStringStream.Create(FBody);
+  HeaderList := TStringList.Create;
+  HeaderList.Text := FHeaders;
   HTTPCilent := TFPHTTPClient.Create(nil);
   try
+    // TODO this add header could be a separate function
+    for i := 0 to HeaderList.Count - 1 do
+    begin
+         Splitted := SplitStringInTwo(HeaderList[i]);
+         HTTPCilent.AddHeader(Splitted.Left, Splitted.Right);
+    end;
+
     HTTPCilent.RequestBody := Stream;
     HTTPCilent.HTTPMethod(FMethod, FURL, ResponseStream, []);
     FResult:= ResponseStream.DataString;
@@ -70,21 +84,23 @@ begin
   finally
     Stream.Free;
     ResponseStream.Free;
+    HeaderList.Free;
     HTTPCilent.Free;
   end;
 end;
 
-constructor TTheadedClient.Create(Url, Method: String; AOnResponse: TOnResponse);
+constructor TTheadedClient.Create(Url, Method, Headers: String; AOnResponse: TOnResponse);
 begin
   inherited Create(True);
   FreeOnTerminate := true;
   FOnResponse := AOnResponse;
   FUrl := Url;
   FMethod := Method;
+  FHeaders:= Headers;
   Start;
 end;
 
-constructor TTheadedClient.Create(Url, Method, Body: String; AOnResponse: TOnResponse);
+constructor TTheadedClient.Create(Url, Method, Headers, Body: String; AOnResponse: TOnResponse);
 begin
   inherited Create(True);
   FreeOnTerminate:= true;
@@ -92,6 +108,7 @@ begin
   FUrl:=Url;
   FBody:=Body;
   FMethod := Method;
+  FHeaders:= Headers;
   Start;
 end;
 
@@ -104,9 +121,9 @@ end;
 procedure TClient.Request(Amethod: String);
 begin
   if FBody <> '' then
-    TTheadedClient.Create(FURL, Amethod, FBody, FOnResponse)
+    TTheadedClient.Create(FURL, Amethod, FHeaders, FBody, FOnResponse)
   else
-    TTheadedClient.Create(FURL, Amethod, FOnResponse)
+    TTheadedClient.Create(FURL, Amethod, FHeaders, FOnResponse)
 end;
 
 end.

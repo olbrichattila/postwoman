@@ -5,8 +5,8 @@ unit main;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, ComCtrls, Menus, ValEdit, environmentUnit, serverEnvironmentUnit,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
+  ComCtrls, Menus, environmentUnit, serverEnvironmentUnit,
   Types, RequestTabSheet, ServerTabSheet;
 
 type
@@ -287,8 +287,9 @@ begin
      RequestResultMemo := TMemo.Create(ResultTabSheet);
      RequestResultMemo.Parent := ResultTabSheet;
      RequestResultMemo.Align:= alClient;
+     RequestResultMemo.OnChange:= @ResultMemoChange;
+     RequestResultMemo.ScrollBars:= ssAutoVertical;
      Memo := RequestResultMemo;
-
      OnResponse := @RequestMemoAdd;
    end;
 end;
@@ -308,6 +309,8 @@ begin
      RequestResultMemo := TMemo.Create(ResultTabSheet);
      RequestResultMemo.Parent := ResultTabSheet;
      RequestResultMemo.Align:= alClient;
+     RequestResultMemo.OnChange:= @ResultMemoChange;
+     RequestResultMemo.ScrollBars:= ssAutoVertical;
      Memo := RequestResultMemo;
      OnResponse := @ServerMemoAdd;
     end;

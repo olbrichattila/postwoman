@@ -10,8 +10,9 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, main, client, environmentUnit, serverEnvironmentUnit,
-  serverSocket, httpSocket, RequestTabSheet, PostWomanTabSheet, ServerTabSheet;
+  Forms, main, client, environmentUnit, serverEnvironmentUnit, serverSocket,
+  httpSocket, RequestTabSheet, PostWomanTabSheet, ServerTabSheet,
+  keyValueEditor, CustomHelpers;
 
 {$R *.res}
 

@@ -5,10 +5,10 @@ unit PostWomanTabSheet;
 interface
 
 uses
-  Classes, SysUtils, Controls, StdCtrls, ComCtrls, ExtCtrls;
+  Classes, SysUtils, Controls, StdCtrls, ComCtrls, ExtCtrls, keyValueEditor;
 
 type
-  TComponentId = (Method = 1, Url = 2, Port = 3, Body = 4, Button = 5, ResponseCode = 6);
+  TComponentId = (Method = 1000, Url = 2000, Port = 3000, Body = 4000, Button = 5000, ResponseCode = 6000, HeaderEditor = 7000);
 
   { TPostWonamTabSheet }
   TPostWonamTabSheet = class(TTabSheet)
@@ -20,6 +20,7 @@ type
       function GetBody: String;
       function GetMethod: String;
       function GetUrl: String;
+      function Getheaders: String;
 
     public
   end;
@@ -35,11 +36,16 @@ var
    i: Integer;
 begin
   Result := nil;
-  if (Acomponent.Tag = AComponentId) and not (AComponent is TTabSheet) and not (AComponent is TPanel) then
+  if (Acomponent.Tag = AComponentId) then
   begin
     Result := AComponent;
     exit;
   end;
+  //if (Acomponent.Tag = AComponentId) and not (AComponent is TTabSheet) and not (AComponent is TPanel) then
+  //begin
+  //  Result := AComponent;
+  //  exit;
+  //end;
 
   for i:= 0 to AComponent.ComponentCount - 1 do
   begin
@@ -118,6 +124,21 @@ begin
   end;
 
   raise Exception.Create('URL Edit cannot be found');
+end;
+
+function TPostWonamTabSheet.Getheaders: String;
+var
+   RComponent: TComponent;
+begin
+  RComponent := GetComponentById(Self, Ord(TComponentId.HeaderEditor));
+  if Assigned(RComponent) then
+  begin
+    Result := TKeyValueEditor(RComponent).Values.Text;
+    Exit;
+  end;
+
+  raise Exception.Create('Header Edit cannot be found');
+
 end;
 
 end.

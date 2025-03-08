@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 2379
+  Left = 2377
   Height = 600
-  Top = 204
+  Top = 372
   Width = 800
   Caption = 'PostWoman'
   ClientHeight = 600
@@ -183,7 +183,9 @@ object MainForm: TMainForm
             Top = 0
             Width = 347
             Align = alClient
+            ScrollBars = ssAutoVertical
             TabOrder = 0
+            OnChange = ResultMemoChange
           end
         end
       end
