@@ -37,7 +37,7 @@ implementation
 
 procedure TRequestTabSheet.Build;
 var
-  TabSheet, ChildTabSheet: TTabSheet;
+  TabSheet, ChildTabSheet, RequestTabSheet, FormDataTabSheet: TTabSheet;
   Panel: TPanel;
   ChildPageControl: TPageControl;
   Index: Integer;
@@ -102,12 +102,31 @@ begin
 
     // Raw Request
     ChildTabSheet := AddTabSheet;
-    ChildTabSheet.Caption := 'Raw request';
-    with TMemo.Create(ChildTabSheet) do
+    ChildTabSheet.Caption := 'Request';
+    with TPageControl.Create(ChildTabSheet) do
     begin
-       Parent := ChildTabSheet;
+      Align:= alClient;
+      Parent := ChildTabSheet;
+      // Create body tab sheets
+      RequestTabSheet := AddTabSheet;
+      RequestTabSheet.Caption:= 'Raw request';
+      FormDataTabSheet := AddTabSheet;
+      FormDataTabSheet.Caption := 'Form Request';
+    end;
+
+    with TMemo.Create(RequestTabSheet) do
+    begin
+       Parent := RequestTabSheet;
        Tag := Ord(TComponentId.Body);
        Lines.Text := FClientInfo.Body;
+       Align:= alClient;
+    end;
+
+    with TKeyValueEditor.Create(FormDataTabSheet) do
+    begin
+       Parent := FormDataTabSheet;
+       Tag := Ord(TComponentId.FormData);
+//       Lines.Text := FClientInfo.Body; // TODO  convert to form data type
        Align:= alClient;
     end;
 
@@ -117,6 +136,8 @@ begin
     with TKeyValueEditor.Create(ChildTabSheet) do
     begin
       Tag := Ord(TComponentId.HeaderEditor);
+      // TODO may change values on KeyValuEditor to string
+      Values := FCLientInfo.Headers
     end;
 
   end;
@@ -170,6 +191,7 @@ function TRequestTabSheet.GetClientInfo: TClientInfo;
 begin
    Result.Body:= GetBody;
    Result.Method:= GetMethod;
+   Result.Headers:=Getheaders;
    Result.URL:= GetUrl;
    Result.Name:= Caption;
 end;

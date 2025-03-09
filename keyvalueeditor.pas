@@ -19,12 +19,12 @@ type
     procedure Build;
     procedure DeleteButtonClick(Sender: TObject);
     procedure AddButtonClick(Sender: TObject);
-    procedure SetValues(AValues: TStringList);
-    function GetValues: TStringList;
+    procedure SetValues(AValues: String);
+    function GetValues: String;
   protected
   public
     constructor Create(AOwner: TComponent); override;
-    property Values: TStringList read GetValues write SetValues;
+    property Values: String read GetValues write SetValues;
 end;
 
 implementation
@@ -40,7 +40,6 @@ begin
       ColWidths[0] := FixedKeyColumnWidth;
       ColWidths[1] := ClientWidth - FixedKeyColumnWidth;
   end;
-
 end;
 
 procedure TKeyValueEditor.Build;
@@ -115,15 +114,20 @@ begin
   FStringGrid.RowCount := FStringGrid.RowCount + 1;
 end;
 
-procedure TKeyValueEditor.SetValues(AValues: TStringList);
+procedure TKeyValueEditor.SetValues(AValues: String);
 var
   i: Integer;
   Splitted: TSplitted;
+  StringList: TStringList;
 begin
+  StringList:= TStringList.Create;
+  StringList.Text := AValues;
+  try
+
   FStringGrid.RowCount := +1;
-  for i := 0 to AValues.Count-1 do
+  for i := 0 to StringList.Count-1 do
   begin
-    Splitted := SplitStringInTwo(AValues[i]);
+    Splitted := SplitStringInTwo(StringList[i]);
     if Splitted.Left <> '' then
     begin
       FStringGrid.RowCount := FStringGrid.RowCount + 1;
@@ -131,18 +135,29 @@ begin
       FStringGrid.Cells[1, FStringGrid.RowCount-1] := Splitted.Right;
     end;
   end;
+  finally
+      StringList.Free;
+  end;
 end;
 
-function TKeyValueEditor.GetValues: TStringList;
+function TKeyValueEditor.GetValues: String;
 var
   i: Integer;
+  StringList: TStringList;
 begin
-  Result := TStringList.Create;
-  for i := 1 to FStringGrid.RowCount -1 do
-  begin
-    if Trim(FStringGrid.Cells[0, i]) <> '' then
-      Result.Add(FStringGrid.Cells[0, i] +': '+FStringGrid.Cells[1, i])
-  end;
+  Result := '';
+  try
+    StringList := TStringList.Create;
+    for i := 1 to FStringGrid.RowCount -1 do
+    begin
+      if Trim(FStringGrid.Cells[0, i]) <> '' then
+        StringList.Add(FStringGrid.Cells[0, i] +': '+FStringGrid.Cells[1, i])
+    end;
+
+  finally
+      Result := StringList.Text;
+      StringList.Free;
+  end
 end;
 
 constructor TKeyValueEditor.Create(AOwner: TComponent);

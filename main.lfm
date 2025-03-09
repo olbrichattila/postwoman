@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 2377
+  Left = 2362
   Height = 600
-  Top = 372
+  Top = 234
   Width = 800
   Caption = 'PostWoman'
   ClientHeight = 600
@@ -11,20 +11,20 @@ object MainForm: TMainForm
   LCLVersion = '3.6.0.0'
   object Panel1: TPanel
     Left = 0
-    Height = 310
+    Height = 382
     Top = 0
     Width = 800
     Align = alClient
-    ClientHeight = 310
+    ClientHeight = 382
     ClientWidth = 800
     TabOrder = 0
     object Panel2: TPanel
       Left = 1
-      Height = 308
+      Height = 380
       Top = 1
       Width = 170
       Align = alLeft
-      ClientHeight = 308
+      ClientHeight = 380
       ClientWidth = 170
       TabOrder = 0
       object AddRequestButton: TButton
@@ -57,7 +57,7 @@ object MainForm: TMainForm
     end
     object PageControl1: TPageControl
       Left = 171
-      Height = 308
+      Height = 380
       Top = 1
       Width = 628
       ActivePage = ClientSheet
@@ -66,11 +66,11 @@ object MainForm: TMainForm
       TabOrder = 1
       object ClientSheet: TTabSheet
         Caption = 'Clients'
-        ClientHeight = 276
+        ClientHeight = 348
         ClientWidth = 618
         object ClientPageControl: TPageControl
           Left = 0
-          Height = 276
+          Height = 348
           Top = 0
           Width = 618
           Align = alClient
@@ -83,11 +83,11 @@ object MainForm: TMainForm
       end
       object ServerSheet: TTabSheet
         Caption = 'Servers'
-        ClientHeight = 276
+        ClientHeight = 348
         ClientWidth = 618
         object ServerPageControl: TPageControl
           Left = 0
-          Height = 276
+          Height = 348
           Top = 0
           Width = 618
           Align = alClient
@@ -104,33 +104,33 @@ object MainForm: TMainForm
     Cursor = crVSplit
     Left = 0
     Height = 10
-    Top = 310
+    Top = 382
     Width = 800
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object ResultPanel: TPanel
     Left = 0
-    Height = 280
-    Top = 320
+    Height = 208
+    Top = 392
     Width = 800
     Align = alBottom
-    ClientHeight = 280
+    ClientHeight = 208
     ClientWidth = 800
     TabOrder = 2
     object GroupBox1: TGroupBox
       Left = 1
-      Height = 278
+      Height = 206
       Top = 1
       Width = 430
       Align = alClient
       Caption = 'Request responses'
-      ClientHeight = 259
+      ClientHeight = 187
       ClientWidth = 428
       TabOrder = 0
       object RequestResultPageControl: TPageControl
         Left = 0
-        Height = 259
+        Height = 187
         Top = 0
         Width = 428
         ActivePage = AggregatedRequestResultSheet
@@ -139,11 +139,11 @@ object MainForm: TMainForm
         TabOrder = 0
         object AggregatedRequestResultSheet: TTabSheet
           Caption = 'Aggregated'
-          ClientHeight = 227
+          ClientHeight = 155
           ClientWidth = 418
           object ResultMemo: TMemo
             Left = 0
-            Height = 227
+            Height = 155
             Top = 0
             Width = 418
             Align = alClient
@@ -156,17 +156,17 @@ object MainForm: TMainForm
     end
     object GroupBox2: TGroupBox
       Left = 440
-      Height = 278
+      Height = 206
       Top = 1
       Width = 359
       Align = alRight
       Caption = 'ServerResponses'
-      ClientHeight = 259
+      ClientHeight = 187
       ClientWidth = 357
       TabOrder = 1
       object ServerResultPageControl: TPageControl
         Left = 0
-        Height = 259
+        Height = 187
         Top = 0
         Width = 357
         ActivePage = AggegatedServerResultPageControl
@@ -175,11 +175,11 @@ object MainForm: TMainForm
         TabOrder = 0
         object AggegatedServerResultPageControl: TTabSheet
           Caption = 'Aggregated'
-          ClientHeight = 227
+          ClientHeight = 155
           ClientWidth = 347
           object ServerResultMemo: TMemo
             Left = 0
-            Height = 227
+            Height = 155
             Top = 0
             Width = 347
             Align = alClient
@@ -192,7 +192,7 @@ object MainForm: TMainForm
     end
     object Splitter2: TSplitter
       Left = 431
-      Height = 278
+      Height = 206
       Top = 1
       Width = 9
       Align = alRight

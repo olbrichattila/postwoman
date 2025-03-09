@@ -5,13 +5,14 @@ unit environmentUnit;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, CustomHelpers;
 type
   TClientInfo = record
     Name: String;
     Method: String;
     URL: String;
     Body: String;
+    Headers: String;
   end;
 
   TClientInfoArray = array of TClientInfo;
@@ -44,6 +45,7 @@ begin
   try
     StringList.Add(AClientInfo.URL);
     StringList.Add(AClientInfo.Method);
+    StringList.Add(LinesToTabbedLine(AClientInfo.Headers));
     StringList.Add(AClientInfo.Body);
     StringList.SaveToFile(AName + FFileExtension);
   finally
@@ -74,7 +76,8 @@ begin
     StringList.LoadFromFile(AName);
     Result.URL:= StringList[0];
     Result.Method:= StringList[1];
-    for i := 2 to StringList.Count -1 do Body := Body + StringList[i] + chr(13);
+    Result.Headers:=  TabbedLineToLines(StringList[2]);
+    for i := 3 to StringList.Count -1 do Body := Body + StringList[i] + #13;
     Result.Body := Body;
   finally
     StringList.Free;

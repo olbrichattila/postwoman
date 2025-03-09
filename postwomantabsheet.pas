@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, Controls, StdCtrls, ComCtrls, ExtCtrls, keyValueEditor;
 
 type
-  TComponentId = (Method = 1000, Url = 2000, Port = 3000, Body = 4000, Button = 5000, ResponseCode = 6000, HeaderEditor = 7000);
+  TComponentId = (Method = 1000, Url = 2000, Port = 3000, Body = 4000, Button = 5000, ResponseCode = 6000, HeaderEditor = 7000, FormData = 8000);
 
   { TPostWonamTabSheet }
   TPostWonamTabSheet = class(TTabSheet)
@@ -133,7 +133,7 @@ begin
   RComponent := GetComponentById(Self, Ord(TComponentId.HeaderEditor));
   if Assigned(RComponent) then
   begin
-    Result := TKeyValueEditor(RComponent).Values.Text;
+    Result := TKeyValueEditor(RComponent).Values;
     Exit;
   end;
 
