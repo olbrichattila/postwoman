@@ -13,6 +13,7 @@ type
     URL: String;
     Body: String;
     Headers: String;
+    FormData: String;
   end;
 
   TClientInfoArray = array of TClientInfo;
@@ -46,6 +47,7 @@ begin
     StringList.Add(AClientInfo.URL);
     StringList.Add(AClientInfo.Method);
     StringList.Add(LinesToTabbedLine(AClientInfo.Headers));
+    StringList.Add(LinesToTabbedLine(AClientInfo.FormData));
     StringList.Add(AClientInfo.Body);
     StringList.SaveToFile(AName + FFileExtension);
   finally
@@ -77,7 +79,8 @@ begin
     Result.URL:= StringList[0];
     Result.Method:= StringList[1];
     Result.Headers:=  TabbedLineToLines(StringList[2]);
-    for i := 3 to StringList.Count -1 do Body := Body + StringList[i] + #13;
+    Result.FormData:=  TabbedLineToLines(StringList[3]);
+    for i := 4 to StringList.Count -1 do Body := Body + StringList[i] + #13;
     Result.Body := Body;
   finally
     StringList.Free;

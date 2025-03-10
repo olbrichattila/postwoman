@@ -5,15 +5,16 @@ unit RequestTabSheet;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   ExtCtrls, ComCtrls, Menus, environmentUnit, PostWomanTabSheet, client,
-  keyValueEditor;
+  keyValueEditor, CustomHelpers, httpdefs;
 
 type TOnResponse = procedure(Sender: TObject; const Message: String) of Object;
 type
   { TRequestTabSheet }
   TRequestTabSheet = class(TPostWonamTabSheet)
     private
+      FBodyPageControl: TPageControl;
       FOnresponse: TOnResponse;
       FCLientInfo: TClientInfo;
       FCLient: TClient;
@@ -22,6 +23,7 @@ type
       procedure ClientSendBtnClick(Sender: TObject);
       procedure SetOnResponse(AOnresponse: TOnResponse);
       procedure InternalResponse(Sender: TObject; const Message: String);
+      function KeyValuesToParams(AKeyValues: String):String;
     protected
     public
       constructor Create(TheOwner: TComponent; const AClientInfo: TClientInfo);
@@ -103,13 +105,15 @@ begin
     // Raw Request
     ChildTabSheet := AddTabSheet;
     ChildTabSheet.Caption := 'Request';
-    with TPageControl.Create(ChildTabSheet) do
+    FBodyPageControl := TPageControl.Create(ChildTabSheet);
+    with FBodyPageControl do
     begin
       Align:= alClient;
       Parent := ChildTabSheet;
       // Create body tab sheets
       RequestTabSheet := AddTabSheet;
       RequestTabSheet.Caption:= 'Raw request';
+
       FormDataTabSheet := AddTabSheet;
       FormDataTabSheet.Caption := 'Form Request';
     end;
@@ -126,7 +130,7 @@ begin
     begin
        Parent := FormDataTabSheet;
        Tag := Ord(TComponentId.FormData);
-//       Lines.Text := FClientInfo.Body; // TODO  convert to form data type
+       Values := FCLientInfo.FormData;
        Align:= alClient;
     end;
 
@@ -153,7 +157,13 @@ begin
 
    case RequestType of
         'GET', 'HEAD', 'OPTIONS', 'TRACE', 'CONNECT': FClient.Body := ''
-         else FClient.Body := GetBody;
+         else
+           begin
+             if FBodyPageControl.ActivePageIndex = 0 then
+                FClient.Body := GetBody
+              else
+                FClient.Body := KeyValuesToParams(GetFormData);
+           end
    end;
 
    FCLient.Request(RequestType);
@@ -168,6 +178,28 @@ procedure TRequestTabSheet.InternalResponse(Sender: TObject;
   const Message: String);
 begin
   if Assigned(FOnresponse) then FOnresponse(Self, Message);
+end;
+
+function TRequestTabSheet.KeyValuesToParams(AKeyValues: String): String;
+var
+   i: Integer;
+   StringList: TStringList;
+   Splitted: TSplitted;
+begin
+  Result := '';
+  StringList:= TStringList.Create;
+
+  try
+     StringList.Text:= AKeyValues;
+     for i := 0 to StringList.Count-1 do
+     begin
+          Splitted := SplitStringInTwo(StringList[0]);
+          if i > 0 then Result := Result + '&';
+          Result := Result + Splitted.Left + '=' + HTTPEncode(Splitted.Right);
+     end;
+  finally
+    StringList.Free;
+  end;
 end;
 
 constructor TRequestTabSheet.Create(TheOwner: TComponent; const AClientInfo: TClientInfo);
@@ -193,6 +225,7 @@ begin
    Result.Headers:=Getheaders;
    Result.URL:= GetUrl;
    Result.Name:= Caption;
+   Result.FormData := GetFormData;
 end;
 
 end.

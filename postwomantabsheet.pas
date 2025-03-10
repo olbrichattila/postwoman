@@ -21,6 +21,7 @@ type
       function GetMethod: String;
       function GetUrl: String;
       function Getheaders: String;
+      function GetFormData: String;
 
     public
   end;
@@ -41,12 +42,6 @@ begin
     Result := AComponent;
     exit;
   end;
-  //if (Acomponent.Tag = AComponentId) and not (AComponent is TTabSheet) and not (AComponent is TPanel) then
-  //begin
-  //  Result := AComponent;
-  //  exit;
-  //end;
-
   for i:= 0 to AComponent.ComponentCount - 1 do
   begin
     Result := GetComponentById(AComponent.Components[i], AComponentId);
@@ -138,7 +133,20 @@ begin
   end;
 
   raise Exception.Create('Header Edit cannot be found');
+end;
 
+function TPostWonamTabSheet.GetFormData: String;
+var
+   RComponent: TComponent;
+begin
+  RComponent := GetComponentById(Self, Ord(TComponentId.FormData));
+  if Assigned(RComponent) then
+  begin
+    Result := TKeyValueEditor(RComponent).Values;
+    Exit;
+  end;
+
+  raise Exception.Create('Form data cannot be found');
 end;
 
 end.

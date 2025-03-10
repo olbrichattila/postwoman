@@ -205,7 +205,6 @@ begin
 
           if Buffer[BufferPointer] = #13 then
           begin
-            WriteLn('line: ', Line);
             if Lines <> '' then
                Lines := Lines + #13+#10+ Line
             else
@@ -256,7 +255,6 @@ begin
         'Server: Apache/2.4.41 (Ubuntu)' + #13#10+
          #13#10+FBody;
 
-        WriteLn('Response', Response);
         fpSend(FClientSocket, @PChar(Response)[0], length(Response), 0);
       Synchronize(@NotifyHandledWebrequest);
     finally
