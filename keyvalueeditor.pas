@@ -143,21 +143,16 @@ end;
 function TKeyValueEditor.GetValues: String;
 var
   i: Integer;
-  StringList: TStringList;
 begin
   Result := '';
-  try
-    StringList := TStringList.Create;
-    for i := 1 to FStringGrid.RowCount -1 do
+  for i := 1 to FStringGrid.RowCount -1 do
+  begin
+    if Trim(FStringGrid.Cells[0, i]) <> '' then
     begin
-      if Trim(FStringGrid.Cells[0, i]) <> '' then
-        StringList.Add(FStringGrid.Cells[0, i] +': '+FStringGrid.Cells[1, i])
-    end;
-
-  finally
-      Result := StringList.Text;
-      StringList.Free;
-  end
+      if Result <> '' then Result := Result + #13#10;
+      Result := Result + FStringGrid.Cells[0, i] +': '+FStringGrid.Cells[1, i];
+    end
+  end;
 end;
 
 constructor TKeyValueEditor.Create(AOwner: TComponent);

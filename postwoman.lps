@@ -7,10 +7,9 @@
       <Unit>
         <Filename Value="postwoman.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="32" Y="15"/>
-        <UsageCount Value="121"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="123"/>
       </Unit>
       <Unit>
         <Filename Value="main.pas"/>
@@ -18,58 +17,55 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="174"/>
-        <CursorPos X="3" Y="176"/>
-        <UsageCount Value="121"/>
+        <TopLine Value="234"/>
+        <CursorPos X="12" Y="229"/>
+        <UsageCount Value="123"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="client.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="59"/>
-        <CursorPos X="20" Y="77"/>
-        <UsageCount Value="121"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="60" Y="53"/>
+        <UsageCount Value="123"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="environmentunit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="environmentUnit"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="29"/>
-        <CursorPos Y="45"/>
-        <UsageCount Value="110"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="35" Y="8"/>
+        <UsageCount Value="112"/>
       </Unit>
       <Unit>
         <Filename Value="serverenvironmentunit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="serverEnvironmentUnit"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="77"/>
-        <CursorPos X="23" Y="102"/>
-        <UsageCount Value="101"/>
+        <CursorPos X="3" Y="11"/>
+        <UsageCount Value="103"/>
       </Unit>
       <Unit>
         <Filename Value="serversocket.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="serverSocket"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="130"/>
-        <CursorPos X="71" Y="146"/>
-        <UsageCount Value="76"/>
+        <TopLine Value="106"/>
+        <CursorPos X="114" Y="132"/>
+        <UsageCount Value="78"/>
       </Unit>
       <Unit>
         <Filename Value="httpsocket.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="httpSocket"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="40"/>
-        <CursorPos X="33" Y="48"/>
-        <UsageCount Value="42"/>
+        <TopLine Value="42"/>
+        <CursorPos X="54" Y="60"/>
+        <UsageCount Value="44"/>
       </Unit>
       <Unit>
         <Filename Value="requesttabsheetunit.pas"/>
@@ -77,45 +73,42 @@
         <UnitName Value="RequestTabSheet"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="21"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="44"/>
       </Unit>
       <Unit>
         <Filename Value="postwomantabsheet.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="PostWomanTabSheet"/>
-        <EditorIndex Value="5"/>
-        <CursorPos X="141" Y="11"/>
-        <UsageCount Value="41"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="110"/>
+        <CursorPos X="47" Y="136"/>
+        <UsageCount Value="43"/>
       </Unit>
       <Unit>
         <Filename Value="servertabsheet.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ServerTabSheet"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="130"/>
-        <CursorPos X="51" Y="32"/>
-        <UsageCount Value="35"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="113"/>
+        <CursorPos X="7" Y="23"/>
+        <UsageCount Value="37"/>
       </Unit>
       <Unit>
         <Filename Value="keyvalueeditor.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="keyValueEditor"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="20"/>
-        <CursorPos Y="43"/>
-        <UsageCount Value="27"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="93"/>
+        <CursorPos Y="155"/>
+        <UsageCount Value="29"/>
       </Unit>
       <Unit>
         <Filename Value="customhelpers.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="CustomHelpers"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="19"/>
-        <UsageCount Value="24"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="26"/>
       </Unit>
       <Unit>
         <Filename Value="server.pas"/>
@@ -151,11 +144,10 @@
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/3.6.0/lcl/include/control.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="3121"/>
         <CursorPos X="5" Y="3138"/>
         <UsageCount Value="34"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/3.6.0/components/lazutils/lazutilities.pas"/>
@@ -230,11 +222,10 @@
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/3.6.0/lcl/interfaces/gtk2/gtk2widgetset.inc"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="26"/>
         <CursorPos Y="44"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/packages/rtl-extra/src/linux/unixsock.inc"/>
@@ -246,11 +237,9 @@
       <Unit>
         <Filename Value="requesttabsheet.pas"/>
         <UnitName Value="RequestTabSheet"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="108"/>
-        <CursorPos X="37" Y="108"/>
-        <UsageCount Value="20"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="16" Y="29"/>
+        <UsageCount Value="21"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/unix/classes.pp"/>
@@ -261,126 +250,34 @@
         <UsageCount Value="13"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
+    <JumpHistory HistoryIndex="6">
       <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="120" Column="56" TopLine="103"/>
+        <Filename Value="client.pas"/>
+        <Caret Line="35" Column="59" TopLine="22"/>
       </Position>
       <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="122" Column="15" TopLine="103"/>
+        <Filename Value="client.pas"/>
+        <Caret Line="52" Column="85" TopLine="34"/>
       </Position>
       <Position>
-        <Filename Value="environmentunit.pas"/>
-        <Caret Line="49" Column="14" TopLine="31"/>
+        <Filename Value="client.pas"/>
+        <Caret Line="35" Column="37" TopLine="15"/>
       </Position>
       <Position>
-        <Filename Value="environmentunit.pas"/>
-        <Caret Line="47" Column="86" TopLine="28"/>
+        <Filename Value="client.pas"/>
+        <Caret Line="122" Column="59" TopLine="109"/>
       </Position>
       <Position>
-        <Filename Value="customhelpers.pas"/>
-        <Caret Line="18" Column="23" TopLine="4"/>
+        <Filename Value="client.pas"/>
+        <Caret Line="84" Column="36" TopLine="67"/>
       </Position>
       <Position>
-        <Filename Value="environmentunit.pas"/>
-        <Caret Line="82" Column="56" TopLine="64"/>
+        <Filename Value="client.pas"/>
+        <Caret Line="126" Column="16" TopLine="109"/>
       </Position>
       <Position>
-        <Filename Value="customhelpers.pas"/>
-        <Caret Line="54" Column="35" TopLine="30"/>
-      </Position>
-      <Position>
-        <Filename Value="customhelpers.pas"/>
-        <Caret Line="61" Column="35" TopLine="30"/>
-      </Position>
-      <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="136" Column="26" TopLine="110"/>
-      </Position>
-      <Position>
-        <Filename Value="postwomantabsheet.pas"/>
-        <Caret Line="23" Column="23" TopLine="5"/>
-      </Position>
-      <Position>
-        <Filename Value="keyvalueeditor.pas"/>
-        <Caret Line="154" Column="23" TopLine="120"/>
-      </Position>
-      <Position>
-        <Filename Value="keyvalueeditor.pas"/>
-        <Caret Line="131" Column="44" TopLine="109"/>
-      </Position>
-      <Position>
-        <Filename Value="keyvalueeditor.pas"/>
-        <Caret Line="122" Column="13" TopLine="104"/>
-      </Position>
-      <Position>
-        <Filename Value="keyvalueeditor.pas"/>
-        <Caret Line="159" Column="33" TopLine="138"/>
-      </Position>
-      <Position>
-        <Filename Value="postwomantabsheet.pas"/>
-        <Caret Line="136" Column="49" TopLine="110"/>
-      </Position>
-      <Position>
-        <Filename Value="customhelpers.pas"/>
-        <Caret Line="73" Column="43" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="customhelpers.pas"/>
-        <Caret Line="57" Column="35" TopLine="39"/>
-      </Position>
-      <Position>
-        <Filename Value="customhelpers.pas"/>
-        <Caret Line="59" Column="22" TopLine="41"/>
-      </Position>
-      <Position>
-        <Filename Value="customhelpers.pas"/>
-        <Caret Line="19"/>
-      </Position>
-      <Position>
-        <Filename Value="/usr/share/lazarus/3.6.0/lcl/include/control.inc"/>
-        <Caret Line="3138" Column="5" TopLine="3121"/>
-      </Position>
-      <Position>
-        <Filename Value="environmentunit.pas"/>
-        <Caret Line="45" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="107" TopLine="91"/>
-      </Position>
-      <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="105" Column="32" TopLine="89"/>
-      </Position>
-      <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="104" Column="31" TopLine="93"/>
-      </Position>
-      <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="110" Column="22" TopLine="87"/>
-      </Position>
-      <Position>
-        <Filename Value="requesttabsheet.pas"/>
-        <Caret Line="129" Column="76" TopLine="109"/>
-      </Position>
-      <Position>
-        <Filename Value="keyvalueeditor.pas"/>
-        <Caret Line="158" Column="42" TopLine="138"/>
-      </Position>
-      <Position>
-        <Filename Value="keyvalueeditor.pas"/>
-        <Caret Line="18" Column="31"/>
-      </Position>
-      <Position>
-        <Filename Value="keyvalueeditor.pas"/>
-        <Caret Line="43" TopLine="20"/>
-      </Position>
-      <Position>
-        <Filename Value="main.pas"/>
-        <Caret Line="280" Column="30" TopLine="274"/>
+        <Filename Value="client.pas"/>
+        <Caret Line="53" TopLine="35"/>
       </Position>
     </JumpHistory>
     <RunParams>

@@ -13,9 +13,10 @@ type
     TTheadedClient = class(TThread)
     private
         FOnResponse: TOnResponse;
-        FResult, FUrl, FBody, FMethod, FHeaders: String;
+        FResult, FUrl, FBody, FMethod, FHeaders, FResponseHeaders: String;
         procedure OnResult;
         procedure SetOnResponse(AOnResponse: TOnResponse);
+        function GetResponseHeaders(AClient: TFPHTTPClient): String;
     protected
         procedure Execute; override;
     public
@@ -27,15 +28,15 @@ type
     { TClient }
     TClient = class(TObject)
       private
-      FOnResponse: TOnResponse;
-      FURL: String;
-      FBody: String;
-      FHeaders: String;
-      procedure SetOnResponse(AOnResponse: TOnResponse);
+        FOnResponse: TOnResponse;
+        FURL: String;
+        FBody: String;
+        FHeaders: String;
+        procedure SetOnResponse(AOnResponse: TOnResponse);
+
       public
       // Standard HTTP request types
         procedure Request(Amethod: String);
-
         property URL: String read FURL write FURL;
         property Body: String read FBody write FBody;
         property Headers: String read FHeaders write FHeaders;
@@ -48,7 +49,8 @@ implementation
 
 procedure TTheadedClient.OnResult;
 begin
-  if Assigned(FOnResponse) then FOnResponse(Self, FResult);
+  if Assigned(FOnResponse) then
+    FOnResponse(Self, '---Response headers---' + #13#10 + FResponseHeaders + #13#10 + '---Response body---' + #13#10 +FResult);
 end;
 
 procedure TTheadedClient.SetOnResponse(AOnResponse: TOnResponse);
@@ -65,7 +67,7 @@ var
   i: Integer;
 begin
   Stream := TStringStream.Create(FBody);
-  ResponseStream := TStringStream.Create(FBody);
+  ResponseStream := TStringStream.Create;
   HeaderList := TStringList.Create;
   HeaderList.Text := FHeaders;
   HTTPCilent := TFPHTTPClient.Create(nil);
@@ -80,6 +82,7 @@ begin
     HTTPCilent.RequestBody := Stream;
     HTTPCilent.HTTPMethod(FMethod, FURL, ResponseStream, []);
     FResult:= ResponseStream.DataString;
+    FResponseHeaders:= GetResponseHeaders(HTTPCilent);
     Synchronize(@OnResult);
   finally
     Stream.Free;
@@ -112,12 +115,24 @@ begin
   Start;
 end;
 
+function TTheadedClient.GetResponseHeaders(AClient: TFPHTTPClient): String;
+var
+  i: Integer;
+begin
+  Result := '';
+  for i := 0 to AClient.ResponseHeaders.Count - 1 do
+  begin
+    if i > 0 then Result := Result + #13#10;
+    Result := Result + AClient.ResponseHeaders[i];
+  end;
+end;
+
+{ TClient }
 procedure TClient.SetOnResponse(AOnResponse: TOnResponse);
 begin
   FOnResponse:=AOnResponse;
 end;
 
-{ TClient }
 procedure TClient.Request(Amethod: String);
 begin
   if FBody <> '' then

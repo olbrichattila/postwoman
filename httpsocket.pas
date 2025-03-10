@@ -17,6 +17,7 @@ type
   THttpSocket = class(TObject)
     private
       FBody: String;
+      FHeaders: String;
       FOnWebRequest: TOnWebRequest;
       FPort, FResponseCode: Integer;
       FServerSocket: TServerSocket;
@@ -30,6 +31,7 @@ type
       property OnWebRequest: TOnWebRequest read FOnWebRequest write FOnWebRequest;
       property Port: Integer read FPort write FPort;
       property ResponseCode: Integer read FResponseCode write FResponseCode;
+      property Headers: String read FHeaders write FHeaders;
   end;
 
 
@@ -52,7 +54,7 @@ begin
   FServerSocket:= TServerSocket.Create;
   FServerSocket.Body:=FBody;
   FServerSocket.OnWebRequest := @OnInternalWebRequest;
-  Result := FServerSocket.StartServer(FPort, FResponseCode);
+  Result := FServerSocket.StartServer(FPort, FResponseCode, FHeaders);
   if Result <> '' then
   begin
       FRunning := false;

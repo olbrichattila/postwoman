@@ -136,7 +136,6 @@ begin
     with TKeyValueEditor.Create(ChildTabSheet) do
     begin
       Tag := Ord(TComponentId.HeaderEditor);
-      // TODO may change values on KeyValuEditor to string
       Values := FCLientInfo.Headers
     end;
 

@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, ComCtrls, Menus, serverEnvironmentUnit, PostWomanTabSheet, httpSocket;
+  ExtCtrls, ComCtrls, Menus, serverEnvironmentUnit, PostWomanTabSheet, httpSocket,
+  keyValueEditor;
 
 type TOnResponse = procedure(Sender: TObject; const Message: String) of Object;
 type
@@ -40,7 +41,7 @@ implementation
 procedure TServerTabSheet.Build;
 var
    Panel: TPanel;
-   TabSheet: TTabSheet;
+   TabSheet, ResponseTabSheet, ResponseHeaderTabSheet: TTabSheet;
 begin
   TabSheet := Self;
   Panel := TPanel.Create(TabSheet);
@@ -99,13 +100,31 @@ begin
        OnClick := @ServerSendBtnClick;
     end;
   end;
-
-  with TMemo.Create(TabSheet) do
+  with TPageControl.Create(Self) do
   begin
-     Parent := TabSheet;
+       Align := alClient;
+       Parent := Self;
+       // Add raw response contorl
+       ResponseTabSheet:= AddTabSheet;
+       ResponseTabSheet.Caption := 'Raw Response';
+
+       // Add raw header control
+       ResponseHeaderTabSheet:= AddTabSheet;
+       ResponseHeaderTabSheet.Caption := 'Response header';
+  end;
+
+  with TMemo.Create(ResponseTabSheet) do
+  begin
+     Parent := ResponseTabSheet;
      Tag := Ord(TComponentId.Body);
      Text := FServerInfo.Body;
      Align:= alClient;
+  end;
+
+  with TKeyValueEditor.Create(ResponseHeaderTabSheet) do
+  begin
+    Tag := Ord(TComponentId.HeaderEditor);
+     Values := FServerInfo.Headers
   end;
 end;
 
@@ -118,6 +137,7 @@ begin
      FHttpSocket.Port := GetPort;
      FHttpSocket.Body:= GetBody;
      FHttpSocket.ResponseCode:= GetResponseCode;
+     FHttpSocket.Headers:= Getheaders;
      StartResult := FHttpSocket.StartServer;
      if StartResult <> '' then
         ShowMessage('Cannot start server ' + StartResult)
@@ -158,6 +178,7 @@ begin
   Result.Name:= Caption;
   Result.Body:= GetBody;
   Result.Port:= GetPort;
+  Result.Headers:= Getheaders;
   Result.ResponseCode:= GetResponseCode;
 end;
 

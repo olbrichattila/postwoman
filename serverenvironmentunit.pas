@@ -5,7 +5,7 @@ unit serverEnvironmentUnit;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, CustomHelpers;
 
 type
   TServerInfo = record
@@ -13,6 +13,7 @@ type
     Port: Integer;
     ResponseCode: Integer;
     Body: String;
+    Headers: String;
   end;
 
   TServerInfoArray = array of TServerInfo;
@@ -47,6 +48,7 @@ begin
   try
     StringList.Add(IntToStr(AServerInfo.Port));
     StringList.Add(IntToStr(AServerInfo.ResponseCode));
+    StringList.Add(LinesToTabbedLine(AServerInfo.Headers));
     StringList.Add(AServerInfo.Body);
     StringList.SaveToFile(AName + FFileExtension);
   finally
@@ -77,7 +79,8 @@ begin
     StringList.LoadFromFile(AName);
     Result.Port:= StrToInt(StringList[0]);
     Result.ResponseCode:= StrToInt(StringList[1]);
-    for i := 2 to StringList.Count -1 do Body := Body + StringList[i] + chr(13);
+    Result.Headers:= TabbedLineToLines(StringList[2]);
+    for i := 3 to StringList.Count -1 do Body := Body + StringList[i] + chr(13);
     Result.Body := Body;
   finally
     StringList.Free;

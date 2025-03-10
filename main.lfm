@@ -124,7 +124,7 @@ object MainForm: TMainForm
       Top = 1
       Width = 430
       Align = alClient
-      Caption = 'Request responses'
+      Caption = 'Request Responses'
       ClientHeight = 187
       ClientWidth = 428
       TabOrder = 0
@@ -160,7 +160,7 @@ object MainForm: TMainForm
       Top = 1
       Width = 359
       Align = alRight
-      Caption = 'ServerResponses'
+      Caption = 'Server Requests'
       ClientHeight = 187
       ClientWidth = 357
       TabOrder = 1

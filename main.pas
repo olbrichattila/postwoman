@@ -226,7 +226,7 @@ begin
       for i := 0 to ServerResultPageControl.PageCount -1 do
       begin
         if ServerResultPageControl.Page[i].Caption = OldTabName then
-                ServerResultPageControl.Page[i].Caption := NewTabName;
+           ServerResultPageControl.Page[i].Caption := NewTabName;
       end;
     end;
 end;

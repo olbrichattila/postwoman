@@ -15,7 +15,7 @@ type
   TServerSocket = class(TThread)
   private
     FPort, FResponseCode: Integer;
-    FBody, FPayload: String;
+    FBody, FPayload, FHeaders: String;
     FMainSocket: Boolean;
     FClientSocket, FServerSocket: TSocket;
     FOnWebRequest: TOnWebRequest;
@@ -26,8 +26,8 @@ type
     procedure Execute; override;
   public
     constructor Create;
-    constructor Create(AClientSocket: TSocket; AResponseCode: Integer; Body : String);
-    function StartServer(Aport, AResponseCode: Integer): String;
+    constructor Create(AClientSocket: TSocket; AResponseCode: Integer; Body, Headers : String);
+    function StartServer(Aport, AResponseCode: Integer; AHeaders: String): String;
     procedure ExecuteMainSocket;
     procedure ExecuteClientSocket;
     property Body: String read FBody write FBody;
@@ -95,26 +95,29 @@ begin
   inherited Create(True);
 end;
 
-constructor TServerSocket.Create(AClientSocket: TSocket; AResponseCode: Integer; Body : String);
+constructor TServerSocket.Create(AClientSocket: TSocket; AResponseCode: Integer; Body, Headers : String);
 begin
   FBody := Body;
-  FResponseCode:=AResponseCode;
+  FResponseCode := AResponseCode;
   FreeOnTerminate := True;
   FClientSocket := AClientSocket;
+  FHeaders := Headers;
   FMainSocket := false;
   inherited Create(True);
   Start;
 end;
 
-function TServerSocket.StartServer(Aport, AResponseCode: Integer): String;
+function TServerSocket.StartServer(Aport, AResponseCode: Integer; AHeaders: String): String;
 var
   ServerAddr: TInetSockAddr;
   Flags: LongInt;
 begin
   Result := '';
-  FPort:= Aport;
-  FResponseCode:=AResponseCode;
+  FPort := Aport;
+  FResponseCode := AResponseCode;
+  FHeaders := AHeaders;
   FMainSocket := true;
+
   // Create the server socket
   FServerSocket := fpSocket(AF_INET, SOCK_STREAM, 0);
   if FServerSocket = -1 then
@@ -164,7 +167,7 @@ begin
        sleep(10);
        continue;
      end;
-     TServerSocket.Create(FClientSocket, FResponseCode, FBody).OnWebRequest:=FOnWebRequest;
+     TServerSocket.Create(FClientSocket, FResponseCode, FBody, FHeaders).OnWebRequest:=FOnWebRequest;
     sleep(10);
   end;
 
@@ -246,14 +249,14 @@ begin
           end;
 
         FPayload:= Lines + Payload;
-        Response := 'HTTP/1.1 '+ IntToStr(FResponseCode) +' OK' + #13+#10+
-        'Content-Type: application/json' + #13+#10+
-        'Content-Length: ' + IntToStr(length(FBody)) + #13+#10+
-        'Date: Mon, 18 Oct 2023 12:34:56 GMT' + #13+#10+
-        'Server: Apache/2.4.41 (Ubuntu)' + #13+#10+
-         #13+#10+FBody;
+        Response := 'HTTP/1.1 '+ IntToStr(FResponseCode) +' OK' + #13#10+
+        FHeaders + #13#10+
+        'Content-Length: ' + IntToStr(length(FBody)) + #13#10+
+        'Date: ' + FormatDateTime('ddd, dd mmm yyyy hh:nn:ss', Now) + ' GMT' + #13#10+
+        'Server: Apache/2.4.41 (Ubuntu)' + #13#10+
+         #13#10+FBody;
 
-        WriteLn(Response);
+        WriteLn('Response', Response);
         fpSend(FClientSocket, @PChar(Response)[0], length(Response), 0);
       Synchronize(@NotifyHandledWebrequest);
     finally
